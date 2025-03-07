@@ -4,6 +4,13 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+		<Title>BaseChord Inftrastructure</Title>
+		<Authors>Beerhunt-Studios Dev</Authors>
+		<PackageProjectUrl>https://github.com/Beerhunt-Studios/</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Beerhunt-Studios/BaseChord</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>

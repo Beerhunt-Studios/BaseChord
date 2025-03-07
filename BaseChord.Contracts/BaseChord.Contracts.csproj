@@ -4,10 +4,17 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+		<Title>BaseChord Contracts</Title>
+		<Authors>Beerhunt-Studios Dev</Authors>
+		<PackageProjectUrl>https://github.com/Beerhunt-Studios/</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Beerhunt-Studios/BaseChord</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NServiceBus" Version="9.2.6" />
+    <PackageReference Include="MassTransit.Abstractions" Version="8.3.7" />
   </ItemGroup>
 
 </Project>
