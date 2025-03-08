@@ -6,8 +6,6 @@ namespace BaseChord.Infrastructure.Database;
 
 public abstract class BaseDbContext: DbContext
 {
-    public const string Schema = "UserService";
-
     protected abstract Assembly LoadingAssemlby { get; }
 
     public BaseDbContext() : base()
