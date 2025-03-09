@@ -30,8 +30,10 @@ public static class ConfigureServices
             endpoints.MapControllers();
         });
 
+        using var scope = app.ApplicationServices.CreateScope();
+
         // Execute Migrations
-        var dbContext = app.ApplicationServices.GetRequiredService<DbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<DbContext>();
         if (dbContext.Database.GetPendingMigrations().Any())
         {
             dbContext.Database.Migrate();
