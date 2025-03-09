@@ -1,6 +1,6 @@
 ﻿using BaseChord.Api.Configurations;
 using BaseChord.Api.Middleware.ExceptionHandling;
-using BaseChord.Api.Middleware.Logging;
+using BaseChord.Api.Logging;
 using CorrelationId;
 using CorrelationId.DependencyInjection;
 using CorrelationId.HttpClient;
@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
+using BaseChord.Api.Middleware.Logging;
 
 namespace BaseChord.Api;
 
@@ -20,6 +21,7 @@ public static class ConfigureServices
     public static void ConfigureBaseApp(this IApplicationBuilder app)
     {
         app.UseCorrelationId();
+        app.UseMiddleware<LoggingEnricherMiddleware>();
         app.UseMiddleware<ExceptionMiddleware>();
         app.UseSwaggerDocumentation();
         app.UseRouting();
@@ -49,7 +51,6 @@ public static class ConfigureServices
         services.AddHttpClient(string.Empty).AddCorrelationIdForwarding();
 
         services.AddSwagger();
-        services.AddCustomizedLogging();
 
         services.AddHealthChecks();
         services.AddControllers()

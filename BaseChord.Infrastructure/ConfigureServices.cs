@@ -51,7 +51,7 @@ public static class ConfigureServices
         {
             options.AddEntityFrameworkOutbox<TDbContext>(o =>
             {
-                o.UseMySql();
+                o.UseSqlServer();
                 o.UseBusOutbox();
             });
 
