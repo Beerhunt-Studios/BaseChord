@@ -21,6 +21,8 @@ namespace BaseChord.Api.Logging
                         .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}")
                         .WriteTo.File(Path.Combine(Environment.CurrentDirectory, "logs", "chorconnect.log"), rollingInterval: RollingInterval.Day, outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}");
                 });
+
+            builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
         }
     }
 }

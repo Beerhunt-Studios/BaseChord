@@ -9,14 +9,14 @@ namespace BaseChord.Api.Middleware.ExceptionHandling
 {
     public class ExceptionMiddleware
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<ExceptionMiddleware> _logger;
 
         // https://stackoverflow.com/a/38935583/856692
         private readonly RequestDelegate _next;
 
         public ExceptionMiddleware(
             RequestDelegate next,
-            ILogger logger)
+            ILogger<ExceptionMiddleware> logger)
         {
             _next = next ?? throw new ArgumentNullException(nameof(next));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
