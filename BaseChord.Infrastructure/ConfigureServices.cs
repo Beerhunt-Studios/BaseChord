@@ -12,16 +12,16 @@ namespace BaseChord.Infrastructure;
 
 public static class ConfigureServices
 {
-    public static IServiceCollection AddInfrastructureServices<TDbContext>(this IServiceCollection services, IConfiguration configuration) where TDbContext : BaseDbContext
+    public static IServiceCollection AddInfrastructureServices<TDbContext>(this IServiceCollection services, IConfiguration configuration, params Assembly[] assemblies) where TDbContext : DbContext
     {
         services.AddDatabaseInfrastructureServices<TDbContext>(configuration);
         services.AddDatabaseServices();
-        services.AddEventbusInfrastructureServices<TDbContext>(configuration);
+        services.AddEventbusInfrastructureServices<TDbContext>(configuration, assemblies);
 
         return services;
     }
 
-    public static IServiceCollection AddDatabaseInfrastructureServices<TDbContext>(this IServiceCollection services, IConfiguration configuration) where TDbContext : BaseDbContext
+    public static IServiceCollection AddDatabaseInfrastructureServices<TDbContext>(this IServiceCollection services, IConfiguration configuration) where TDbContext : DbContext
     {
         services.AddEFSecondLevelCache(
                 options => options.UseMemoryCacheProvider().ConfigureLogging(true).UseCacheKeyPrefix("EF_")
@@ -45,7 +45,7 @@ public static class ConfigureServices
         return services;
     }
 
-    public static IServiceCollection AddEventbusInfrastructureServices<TDbContext>(this IServiceCollection services, IConfiguration configuration) where TDbContext : BaseDbContext
+    public static IServiceCollection AddEventbusInfrastructureServices<TDbContext>(this IServiceCollection services, IConfiguration configuration, params Assembly[] assemblies) where TDbContext : DbContext
     {
         services.AddMassTransit(options =>
         {
@@ -64,7 +64,7 @@ public static class ConfigureServices
                 });
             });
 
-            options.AddConsumers(AppDomain.CurrentDomain.GetAssemblies());
+            options.AddConsumers(assemblies);
             options.AddConfigureEndpointsCallback((context, name, cfg) =>
             {
                 cfg.UseDelayedRedelivery(r => r.Intervals(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(15), TimeSpan.FromMinutes(30)));
