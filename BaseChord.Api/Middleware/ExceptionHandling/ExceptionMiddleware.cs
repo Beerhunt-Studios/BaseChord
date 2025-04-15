@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using BaseChord.Application.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -42,6 +43,9 @@ namespace BaseChord.Api.Middleware.ExceptionHandling
             if (exception is ValidationException)
             {
                 code = HttpStatusCode.BadRequest;
+            } else if (exception is NotFoundException)
+            {
+                code = HttpStatusCode.NotFound;
             }
 
             context.Response.StatusCode = (int)code;
