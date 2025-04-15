@@ -49,7 +49,7 @@ internal static class SwaggerConfigurationExtensions
             });
 
             // This coupled with the properties in the csproj allow the swagger page to show additional comments for methods
-            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlFile = $"{Assembly.GetEntryAssembly().GetName().Name}.xml";
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             options.IncludeXmlComments(xmlPath);
         });
