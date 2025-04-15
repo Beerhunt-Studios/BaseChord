@@ -15,16 +15,16 @@ public static class UrlValidation
 
     /// <summary>
     /// Adds a Rule that prevents the string to contain a URL or an IP-Address
-    /// <see cref="NotUrl{T}"/>
-    /// <see cref="NotIPAddress{T}"/>
+    /// <see cref="NoUrl{T}"/>
+    /// <see cref="NoIpAddress{T}"/>
     /// </summary>
     /// <param name="ruleBuilderInitial">The fluentvalidation rule builder <see cref="IRuleBuilderInitial{T,TProperty}"/></param>
     /// <typeparam name="T"></typeparam>
     /// <returns><see cref="IRuleBuilderInitial{T,TProperty}"/></returns>
-    public static IRuleBuilderInitial<T, string> NotServer<T>(this IRuleBuilderInitial<T, string> ruleBuilderInitial)
+    public static IRuleBuilder<T, string?> NotServer<T>(this IRuleBuilder<T, string?> ruleBuilderInitial)
     {
-        ruleBuilderInitial.NotUrl();
-        ruleBuilderInitial.NotIPAddress();
+        ruleBuilderInitial.NoUrl();
+        ruleBuilderInitial.NoIpAddress();
 
         return ruleBuilderInitial;
     }
@@ -35,9 +35,9 @@ public static class UrlValidation
     /// <param name="ruleBuilderInitial">The fluentvalidation rule builder <see cref="IRuleBuilderInitial{T,TProperty}"/></param>
     /// <typeparam name="T"></typeparam>
     /// <returns><see cref="IRuleBuilderInitial{T,TProperty}"/></returns>
-    public static IRuleBuilderInitial<T, string> NotUrl<T>(this IRuleBuilderInitial<T, string> ruleBuilderInitial)
+    public static IRuleBuilder<T, string?> NoUrl<T>(this IRuleBuilder<T, string?> ruleBuilderInitial)
     {
-        ruleBuilderInitial.Must(x => Regex.IsMatch(x, UrlRegex));
+        ruleBuilderInitial.Must(x => Regex.IsMatch(x ?? string.Empty, UrlRegex));
 
         return ruleBuilderInitial;
     }
@@ -48,9 +48,9 @@ public static class UrlValidation
     /// <param name="ruleBuilderInitial">The fluentvalidation rule builder <see cref="IRuleBuilderInitial{T,TProperty}"/></param>
     /// <typeparam name="T"></typeparam>
     /// <returns><see cref="IRuleBuilderInitial{T,TProperty}"/></returns>
-    public static IRuleBuilderInitial<T, string> NotIPAddress<T>(this IRuleBuilderInitial<T, string> ruleBuilderInitial)
+    public static IRuleBuilder<T, string?> NoIpAddress<T>(this IRuleBuilder<T, string?> ruleBuilderInitial)
     {
-        ruleBuilderInitial.Must(x => Regex.IsMatch(x, IpAddressRegex));
+        ruleBuilderInitial.Must(x => Regex.IsMatch(x ?? string.Empty, IpAddressRegex));
 
         return ruleBuilderInitial;
     }
