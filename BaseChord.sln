@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseChord.Infrastructure", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseChord.IntegrationTests", "BaseChord.IntegrationTests\BaseChord.IntegrationTests.csproj", "{FF51BE8B-6FE6-491E-B160-BAE3091C0189}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseChord.UnitTest", "BaseChord.UnitTest\BaseChord.UnitTest.csproj", "{D0B71A45-3D78-42B0-BC17-0EA9B20D8B9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{FF51BE8B-6FE6-491E-B160-BAE3091C0189}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF51BE8B-6FE6-491E-B160-BAE3091C0189}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF51BE8B-6FE6-491E-B160-BAE3091C0189}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0B71A45-3D78-42B0-BC17-0EA9B20D8B9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0B71A45-3D78-42B0-BC17-0EA9B20D8B9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0B71A45-3D78-42B0-BC17-0EA9B20D8B9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0B71A45-3D78-42B0-BC17-0EA9B20D8B9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,5 +66,6 @@ Global
 		{8A2716F5-4157-4FD7-8079-4F932FCA4C85} = {7060AB8C-56D1-4397-BEA5-5357ED912325}
 		{06E8C3B3-7C3F-4B2C-BF05-52973CFB56DC} = {7060AB8C-56D1-4397-BEA5-5357ED912325}
 		{FF51BE8B-6FE6-491E-B160-BAE3091C0189} = {7C51BD79-D35D-4956-96AF-B7373245EA07}
+		{D0B71A45-3D78-42B0-BC17-0EA9B20D8B9A} = {7C51BD79-D35D-4956-96AF-B7373245EA07}
 	EndGlobalSection
 EndGlobal

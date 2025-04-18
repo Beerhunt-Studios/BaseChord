@@ -21,8 +21,8 @@ public static class ConfigureServices
     public static void ConfigureBaseApp(this IApplicationBuilder app)
     {
         app.UseCorrelationId();
-        app.UseMiddleware<LoggingEnricherMiddleware>();
         app.UseMiddleware<ExceptionMiddleware>();
+        app.UseMiddleware<LoggingEnricherMiddleware>();
         app.UseSwaggerDocumentation();
         app.UseRouting();
         app.UseAuthentication();

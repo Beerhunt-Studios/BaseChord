@@ -8,6 +8,9 @@ using System.Reflection;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using BaseChord.Application.Validation;
+using FluentValidation;
+using MediatR;
 
 namespace BaseChord.Application;
 
@@ -24,6 +27,9 @@ public static class ConfigureServices
     private static void AddApplicationMediatR(this IServiceCollection services)
     {
         services.AddMediatR(x => x.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+        
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
     }
 
     private static void AddApplicationAutoMapper(this IServiceCollection services)
