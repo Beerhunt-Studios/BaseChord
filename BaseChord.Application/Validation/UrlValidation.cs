@@ -37,7 +37,9 @@ public static class UrlValidation
     /// <returns><see cref="IRuleBuilderInitial{T,TProperty}"/></returns>
     public static IRuleBuilder<T, string?> NoUrl<T>(this IRuleBuilder<T, string?> ruleBuilderInitial)
     {
-        ruleBuilderInitial.Must(x => Regex.IsMatch(x ?? string.Empty, UrlRegex));
+        ruleBuilderInitial
+            .Must(x => !Regex.IsMatch(x ?? string.Empty, UrlRegex))
+            .WithMessage("The Value provided contains an URL");
 
         return ruleBuilderInitial;
     }
@@ -50,7 +52,9 @@ public static class UrlValidation
     /// <returns><see cref="IRuleBuilderInitial{T,TProperty}"/></returns>
     public static IRuleBuilder<T, string?> NoIpAddress<T>(this IRuleBuilder<T, string?> ruleBuilderInitial)
     {
-        ruleBuilderInitial.Must(x => Regex.IsMatch(x ?? string.Empty, IpAddressRegex));
+        ruleBuilderInitial
+            .Must(x => !Regex.IsMatch(x ?? string.Empty, IpAddressRegex))
+            .WithMessage("The Value provided contains an IP Address");
 
         return ruleBuilderInitial;
     }
