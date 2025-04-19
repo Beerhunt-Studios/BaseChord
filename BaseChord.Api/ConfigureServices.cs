@@ -14,6 +14,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using BaseChord.Api.Converter;
 using BaseChord.Api.Middleware.Logging;
+using BaseChord.Application.Converter;
 
 namespace BaseChord.Api;
 
@@ -59,6 +60,7 @@ public static class ConfigureServices
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new OptionalJsonConverterFactory());
             });
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
