@@ -1,17 +1,18 @@
 ﻿using BaseChord.Application.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.ThreadSafe;
 using Microsoft.Extensions.Logging;
 
 namespace BaseChord.Infrastructure.Database;
 
 public class DbTransaction : IDbTransaction, IDisposable
 {
-    private DbContext _context;
+    private readonly ThreadSafeDbContext _context;
+    private readonly ILogger _logger;
     private IDbContextTransaction? _transaction;
-    private ILogger _logger;
 
-    public DbTransaction(ILogger logger, DbContext context)
+    public DbTransaction(ILogger logger, ThreadSafeDbContext context)
     {
         _logger = logger;
         _context = context;
