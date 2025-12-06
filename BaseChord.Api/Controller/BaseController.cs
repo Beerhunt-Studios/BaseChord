@@ -4,11 +4,27 @@ using System.Security.Claims;
 
 namespace BaseChord.Api.Controller;
 
+/// <summary>
+/// Represents a base controller class that provides shared functionality for derived API controllers.
+/// </summary>
 public abstract class BaseController : ControllerBase
 {
+    /// <summary>
+    /// Gets the instance of <see cref="ISender"/> used to send commands or queries
+    /// within the MediatR library for handling application logic.
+    /// </summary>
+    /// <remarks>
+    /// This property is initialized through the constructor of the <see cref="BaseController"/>
+    /// and cannot be modified after initialization. It is intended to provide a unified
+    /// way of interacting with the MediatR pipeline in derived controllers.
+    /// </remarks>
     protected ISender Sender { get; init; }
 
-    public BaseController(ISender sender) => Sender = sender;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BaseController"/> class with the specified <see cref="ISender"/>.
+    /// </summary>
+    /// <param name="sender">The <see cref="ISender"/> instance used to send commands or queries via MediatR.</param>
+    protected BaseController(ISender sender) => Sender = sender;
 
     /// <summary>
     /// Searches the httpcontext for the external identifier provided by auth0

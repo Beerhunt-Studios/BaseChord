@@ -15,12 +15,40 @@ using System.Text.Json.Serialization;
 using BaseChord.Api.Converter;
 using BaseChord.Api.Middleware.Logging;
 using BaseChord.Application.Converter;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore.ThreadSafe;
 
 namespace BaseChord.Api;
 
+/// <summary>
+/// Provides extension methods for configuring services and application middleware in an ASP.NET Core application.
+/// </summary>
 public static class ConfigureServices
 {
+    /// <summary>
+    /// Configures the base settings and integrations for the web host during application startup.
+    /// </summary>
+    /// <param name="builder">The web host builder used to configure the application host.</param>
+    /// <param name="configuration">The configuration instance providing necessary settings for the web host.</param>
+    public static void ConfigureBaseBuilder(this WebHostBuilder builder, IConfiguration configuration)
+    {
+        builder
+            .UseSentry(o =>
+            {
+                o.Dsn = configuration["Sentry:Dsn"];
+                o.ProfilesSampleRate = configuration.GetValue<double>("Sentry:SampleRate");
+                o.TracesSampleRate = configuration.GetValue<double>("Sentry:SampleRate");
+                o.Debug = configuration.GetValue<bool>("Sentry:Debug");
+            });
+    }
+    
+    
+    /// <summary>
+    /// Configures the middleware pipeline for the application, including exception handling, logging,
+    /// Swagger documentation, routing, authentication, and authorization. Also ensures pending
+    /// database migrations are applied at runtime.
+    /// </summary>
+    /// <param name="app">The application builder used to specify the middleware pipeline.</param>
     public static void ConfigureBaseApp(this IApplicationBuilder app)
     {
         app.UseCorrelationId();
@@ -28,6 +56,7 @@ public static class ConfigureServices
         app.UseMiddleware<LoggingEnricherMiddleware>();
         app.UseSwaggerDocumentation();
         app.UseRouting();
+        app.UseSentryTracing();
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseEndpoints(endpoints =>
@@ -45,6 +74,13 @@ public static class ConfigureServices
         }
     }
 
+    /// <summary>
+    /// Registers API-related services and configurations into the provided service collection, including
+    /// authentication, health checks, controllers with custom JSON converters, Swagger documentation, and correlation ID middleware.
+    /// </summary>
+    /// <param name="services">The service collection to which API services and configurations will be added.</param>
+    /// <param name="configuration">The configuration instance providing necessary settings for API configuration.</param>
+    /// <returns>The updated service collection with API services configured.</returns>
     public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDefaultCorrelationId();
