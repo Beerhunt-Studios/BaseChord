@@ -33,8 +33,4 @@
     <ProjectReference Include="..\BaseChord.Infrastructure\BaseChord.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Middleware\Tracing\" />
-  </ItemGroup>
-
 </Project>
