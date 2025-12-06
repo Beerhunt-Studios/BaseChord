@@ -30,8 +30,4 @@
         <ProjectReference Include="..\BaseChord.Application\BaseChord.Application.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="EventBus\"/>
-    </ItemGroup>
-
 </Project>
