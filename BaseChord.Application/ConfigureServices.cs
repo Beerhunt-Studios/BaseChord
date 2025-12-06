@@ -1,13 +1,7 @@
 ﻿using AutoMapper;
 using BaseChord.Application.Mapping;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 using BaseChord.Application.Validation;
 using FluentValidation;
 using MediatR;

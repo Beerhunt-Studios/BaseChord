@@ -58,6 +58,8 @@ public class ExceptionMiddleware
     {
         _logger.LogError(exception, exception.Message);
 
+        SentrySdk.CaptureException(exception);
+        
         Response result = new Response {
             Message = exception.Message
         };

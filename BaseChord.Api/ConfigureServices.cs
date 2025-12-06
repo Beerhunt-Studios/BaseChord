@@ -15,6 +15,7 @@ using System.Text.Json.Serialization;
 using BaseChord.Api.Converter;
 using BaseChord.Api.Middleware.Logging;
 using BaseChord.Application.Converter;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore.ThreadSafe;
 
 namespace BaseChord.Api;
@@ -24,6 +25,24 @@ namespace BaseChord.Api;
 /// </summary>
 public static class ConfigureServices
 {
+    /// <summary>
+    /// Configures the base settings and integrations for the web host during application startup.
+    /// </summary>
+    /// <param name="builder">The web host builder used to configure the application host.</param>
+    /// <param name="configuration">The configuration instance providing necessary settings for the web host.</param>
+    public static void ConfigureBaseBuilder(this WebHostBuilder builder, IConfiguration configuration)
+    {
+        builder
+            .UseSentry(o =>
+            {
+                o.Dsn = configuration["Sentry:Dsn"];
+                o.ProfilesSampleRate = configuration.GetValue<double>("Sentry:SampleRate");
+                o.TracesSampleRate = configuration.GetValue<double>("Sentry:SampleRate");
+                o.Debug = configuration.GetValue<bool>("Sentry:Debug");
+            });
+    }
+    
+    
     /// <summary>
     /// Configures the middleware pipeline for the application, including exception handling, logging,
     /// Swagger documentation, routing, authentication, and authorization. Also ensures pending
@@ -37,6 +56,7 @@ public static class ConfigureServices
         app.UseMiddleware<LoggingEnricherMiddleware>();
         app.UseSwaggerDocumentation();
         app.UseRouting();
+        app.UseSentryTracing();
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseEndpoints(endpoints =>
