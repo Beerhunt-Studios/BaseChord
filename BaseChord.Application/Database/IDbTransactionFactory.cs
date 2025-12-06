@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace BaseChord.Application.Database;
 
+/// <summary>
+/// Factory for creating database transactions
+/// </summary>
 public interface IDbTransactionFactory
 {
-    IDbTransaction CreateTransaction();
+    /// <summary>
+    /// Creates a new database transaction
+    /// </summary>
+    /// <returns>A DatabaseTransaction</returns>
+    public Task<IDbTransaction> CreateTransaction();
 }

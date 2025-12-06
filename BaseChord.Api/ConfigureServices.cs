@@ -14,6 +14,8 @@ using System.Text;
 using System.Text.Json.Serialization;
 using BaseChord.Api.Converter;
 using BaseChord.Api.Middleware.Logging;
+using BaseChord.Application.Converter;
+using Microsoft.EntityFrameworkCore.ThreadSafe;
 
 namespace BaseChord.Api;
 
@@ -36,7 +38,7 @@ public static class ConfigureServices
         using var scope = app.ApplicationServices.CreateScope();
 
         // Execute Migrations
-        var dbContext = scope.ServiceProvider.GetRequiredService<DbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<ThreadSafeDbContext>();
         if (dbContext.Database.GetPendingMigrations().Any())
         {
             dbContext.Database.Migrate();
@@ -59,6 +61,7 @@ public static class ConfigureServices
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new OptionalJsonConverterFactory());
             });
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
