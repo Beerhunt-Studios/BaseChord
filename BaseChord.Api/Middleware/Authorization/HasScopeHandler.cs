@@ -4,8 +4,12 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BaseChord.Api.Middleware.Authorization;
 
+/// <summary>
+/// Custom authorization handler that checks if the user has a specific scope
+/// </summary>
 public class HasScopeHandler : AuthorizationHandler<HasScopeRequirement>
 {
+    /// <inheritdoc cref="AuthorizationHandler{TRequirement}.HandleRequirementAsync"/>
     protected override Task HandleRequirementAsync(
         AuthorizationHandlerContext context,
         HasScopeRequirement requirement

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Net;
 using BaseChord.Application.Exceptions;
 using FluentValidation;
 using FluentValidation.Results;
@@ -10,6 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace BaseChord.Api.Middleware.ExceptionHandling;
 
+/// <summary>
+/// Custom middleware that handles exceptions
+/// </summary>
 public class ExceptionMiddleware
 {
     private record Response
@@ -24,6 +24,10 @@ public class ExceptionMiddleware
     // https://stackoverflow.com/a/38935583/856692
     private readonly RequestDelegate _next;
 
+    /// <summary>
+    /// Middleware to handle uncaught exceptions during the processing of HTTP requests.
+    /// Logs exceptions and returns appropriate HTTP responses based on exception types.
+    /// </summary>
     public ExceptionMiddleware(
         RequestDelegate next,
         ILogger<ExceptionMiddleware> logger)
@@ -32,6 +36,12 @@ public class ExceptionMiddleware
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
+    /// <summary>
+    /// Processes incoming HTTP requests and handles any exceptions that occur during their execution.
+    /// Passes the request to the next middleware in the pipeline and captures exceptions for logging and response generation.
+    /// </summary>
+    /// <param name="context">The HTTP context for the current request.</param>
+    /// <returns>A task that represents the asynchronous execution of the middleware.</returns>
     public async Task Invoke(HttpContext context)
     {
         try
