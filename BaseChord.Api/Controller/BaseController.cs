@@ -21,8 +21,9 @@ public abstract class BaseController : ControllerBase
     protected ISender Sender { get; init; }
 
     /// <summary>
-    /// Represents a base controller class that provides shared functionality for derived API controllers.
+    /// Initializes a new instance of the <see cref="BaseController"/> class with the specified <see cref="ISender"/>.
     /// </summary>
+    /// <param name="sender">The <see cref="ISender"/> instance used to send commands or queries via MediatR.</param>
     protected BaseController(ISender sender) => Sender = sender;
 
     /// <summary>
