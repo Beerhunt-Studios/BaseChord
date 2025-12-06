@@ -23,7 +23,7 @@ public abstract class BaseController : ControllerBase
     /// <summary>
     /// Represents a base controller class that provides shared functionality for derived API controllers.
     /// </summary>
-    public BaseController(ISender sender) => Sender = sender;
+    protected BaseController(ISender sender) => Sender = sender;
 
     /// <summary>
     /// Searches the httpcontext for the external identifier provided by auth0
