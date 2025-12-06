@@ -39,7 +39,7 @@ public static class ConfigureServices
 
     /// <summary>
     /// Extends the AutoMapper configuration to include dynamic mappings by discovering all types
-    /// implementing the IMap<,> interface and registering their mappings at runtime.
+    /// implementing the <see cref="IMap{TSource,TDestination}"/> interface and registering their mappings at runtime.
     /// </summary>
     /// <param name="cfg">
     /// The AutoMapper configuration expression used to define mapping rules between types.

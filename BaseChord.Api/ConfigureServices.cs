@@ -19,8 +19,17 @@ using Microsoft.EntityFrameworkCore.ThreadSafe;
 
 namespace BaseChord.Api;
 
+/// <summary>
+/// Provides extension methods for configuring services and application middleware in an ASP.NET Core application.
+/// </summary>
 public static class ConfigureServices
 {
+    /// <summary>
+    /// Configures the middleware pipeline for the application, including exception handling, logging,
+    /// Swagger documentation, routing, authentication, and authorization. Also ensures pending
+    /// database migrations are applied at runtime.
+    /// </summary>
+    /// <param name="app">The application builder used to specify the middleware pipeline.</param>
     public static void ConfigureBaseApp(this IApplicationBuilder app)
     {
         app.UseCorrelationId();
@@ -45,6 +54,13 @@ public static class ConfigureServices
         }
     }
 
+    /// <summary>
+    /// Registers API-related services and configurations into the provided service collection, including
+    /// authentication, health checks, controllers with custom JSON converters, Swagger documentation, and correlation ID middleware.
+    /// </summary>
+    /// <param name="services">The service collection to which API services and configurations will be added.</param>
+    /// <param name="configuration">The configuration instance providing necessary settings for API configuration.</param>
+    /// <returns>The updated service collection with API services configured.</returns>
     public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDefaultCorrelationId();
