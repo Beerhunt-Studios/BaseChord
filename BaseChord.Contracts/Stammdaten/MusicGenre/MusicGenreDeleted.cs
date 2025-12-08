@@ -6,7 +6,8 @@
 public interface MusicGenreDeleted : BaseContract
 {
     /// <summary>
-    /// The unique identifier of the deleted music genre.
+    /// Gets the unique identifier of the music genre that has been added.
+    /// This identifier is used to distinguish the genre within the system.
     /// </summary>
     public int Id { get; }
 }
