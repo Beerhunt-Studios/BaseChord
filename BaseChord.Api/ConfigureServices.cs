@@ -30,7 +30,7 @@ public static class ConfigureServices
     /// </summary>
     /// <param name="builder">The web host builder used to configure the application host.</param>
     /// <param name="configuration">The configuration instance providing necessary settings for the web host.</param>
-    public static void ConfigureBaseBuilder(this WebHostBuilder builder, IConfiguration configuration)
+    public static void ConfigureBaseBuilder(this IWebHostBuilder builder, IConfiguration configuration)
     {
         builder
             .UseSentry(o =>
