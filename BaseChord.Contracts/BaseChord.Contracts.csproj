@@ -17,9 +17,4 @@
   <ItemGroup>
     <PackageReference Include="MassTransit.Abstractions" Version="8.3.7" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\BaseChord.Application\BaseChord.Application.csproj" />
-  </ItemGroup>
-
 </Project>
