@@ -130,6 +130,14 @@ public static class ConfigureServices
     {
         services.AddMassTransit(options =>
         {
+            options.AddConsumers(assemblies);
+            options.AddConfigureEndpointsCallback((context, name, cfg) =>
+            {
+                cfg.UseDelayedRedelivery(r => r.Intervals(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(15), TimeSpan.FromMinutes(30)));
+                cfg.UseMessageRetry(r => r.Immediate(5));
+                cfg.UseEntityFrameworkOutbox<TDbContext>(context);
+            });
+            
             options.AddEntityFrameworkOutbox<TDbContext>(o =>
             {
                 o.UseSqlServer();
@@ -143,14 +151,8 @@ public static class ConfigureServices
                     x.Username(configuration["Eventbus:Username"] ?? throw new NullReferenceException("The username has not been specififed for the Eventbus"));
                     x.Password(configuration["Eventbus:Password"] ?? throw new NullReferenceException("The password has not been specififed for the Eventbus"));
                 });
-            });
-
-            options.AddConsumers(assemblies);
-            options.AddConfigureEndpointsCallback((context, name, cfg) =>
-            {
-                cfg.UseDelayedRedelivery(r => r.Intervals(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(15), TimeSpan.FromMinutes(30)));
-                cfg.UseMessageRetry(r => r.Immediate(5));
-                cfg.UseEntityFrameworkOutbox<TDbContext>(context);
+                
+                cfg.ConfigureEndpoints(context);
             });
         });
 
