@@ -1,10 +1,12 @@
-﻿namespace BaseChord.Contracts;
+﻿using MediatR;
+
+namespace BaseChord.Contracts;
 
 /// <summary>
 /// Represents the foundational contract interface for all derived contracts.
 /// Ensures the inclusion of a unique identifier property to standardize data tracking.
 /// </summary>
-public interface BaseContract
+public interface BaseContract : INotification
 {
     /// <summary>
     /// Gets the unique identifier associated with the contract,
