@@ -31,7 +31,17 @@ public static class ModelBuilderExtensions
         {
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
         }
+    }
 
+    /// <summary>
+    /// Configures the <see cref="ModelBuilder"/> to include event bus infrastructure-related setup,
+    /// such as adding entities required for a transactional outbox pattern.
+    /// </summary>
+    /// <param name="modelBuilder">
+    /// The <see cref="ModelBuilder"/> being extended.
+    /// </param>
+    public static void AddEventbusInfrastructure(this ModelBuilder modelBuilder)
+    {
         modelBuilder.AddTransactionalOutboxEntities();
     }
 }
