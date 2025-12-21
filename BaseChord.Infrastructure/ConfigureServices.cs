@@ -25,6 +25,9 @@ public static class ConfigureServices
     /// <typeparam name="TDbContext">
     /// The type of the database context, which must inherit from ThreadSafeDbContext.
     /// </typeparam>
+    /// <typeparam name="TDbMassTransitContext">
+    /// The type of the database context used for the eventbus, which must inherit from DbContext.
+    /// </typeparam>
     /// <param name="services">
     /// The <see cref="IServiceCollection"/> to add the services to.
     /// </param>
@@ -38,12 +41,13 @@ public static class ConfigureServices
     /// <returns>
     /// The modified <see cref="IServiceCollection"/> with the added services.
     /// </returns>
-    public static IServiceCollection AddInfrastructureServices<TDbContext>(this IServiceCollection services, IConfiguration configuration, params Assembly[] assemblies)
+    public static IServiceCollection AddInfrastructureServices<TDbContext, TDbMassTransitContext>(this IServiceCollection services, IConfiguration configuration, string schema, params Assembly[] assemblies)
         where TDbContext : ThreadSafeDbContext
+        where TDbMassTransitContext : DbContext
     {
-        services.AddDatabaseInfrastructureServices<TDbContext>(configuration);
+        services.AddDatabaseInfrastructureServices<TDbContext>(configuration, schema);
         services.AddDatabaseServices();
-        services.AddEventbusInfrastructureServices<TDbContext>(configuration, assemblies);
+        services.AddEventbusInfrastructureServices<TDbMassTransitContext>(configuration, assemblies);
 
         return services;
     }
@@ -66,7 +70,7 @@ public static class ConfigureServices
     /// <returns>
     /// The modified <see cref="IServiceCollection"/> with the added database infrastructure services.
     /// </returns>
-    public static IServiceCollection AddDatabaseInfrastructureServices<TDbContext>(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddDatabaseInfrastructureServices<TDbContext>(this IServiceCollection services, IConfiguration configuration, string schema)
         where TDbContext : ThreadSafeDbContext
     {
         services.AddEFSecondLevelCache(
@@ -76,7 +80,7 @@ public static class ConfigureServices
         services.AddDbContext<TDbContext>(options =>
         {
             options
-            .UseSqlServer(configuration["Database:ConnectionString"], opt => opt.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
+            .UseSqlServer(configuration["Database:ConnectionString"], opt => opt.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery).MigrationsHistoryTable("__EFMigrationsHistory", schema))
             .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
         });
         services.AddScoped<ThreadSafeDbContext>(x => x.GetRequiredService<TDbContext>());
@@ -128,6 +132,13 @@ public static class ConfigureServices
     public static IServiceCollection AddEventbusInfrastructureServices<TDbContext>(this IServiceCollection services, IConfiguration configuration, params Assembly[] assemblies)
         where TDbContext : DbContext
     {
+        services.AddDbContext<TDbContext>(options =>
+        {
+            options
+                .UseSqlServer(configuration["Database:ConnectionString"], opt => opt.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery).MigrationsHistoryTable("__EFMigrationsHistory", "masstransit"))
+                .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+        });
+        
         services.AddMassTransit(options =>
         {
             options.AddConsumers(assemblies);
