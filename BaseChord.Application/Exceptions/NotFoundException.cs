@@ -16,7 +16,7 @@ public class NotFoundException : Exception
     /// </summary>
     /// <param name="entityType">The entitytype</param>
     /// <param name="id">The id</param>
-    public NotFoundException(Type entityType, Guid id) : base(string.Format("The Entity \"{0}\" was not found while trying to find it with \"{1}\"", entityType.Name, id))
+    public NotFoundException(Type entityType, int id) : base(string.Format("The Entity \"{0}\" was not found while trying to find it with \"{1}\"", entityType.Name, id))
     {
 
     }
