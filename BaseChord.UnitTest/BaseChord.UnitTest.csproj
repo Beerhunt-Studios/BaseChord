@@ -11,6 +11,8 @@
         <RepositoryType>git</RepositoryType>
         <IncludeSymbols>True</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <IsPackable>false</IsPackable>
+        <OutputType>Library</OutputType>
     </PropertyGroup>
 
 </Project>
