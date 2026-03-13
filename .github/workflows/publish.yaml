@@ -28,9 +28,6 @@ jobs:
           dotnet-version: '9.0.x'
         env:
           NUGET_AUTH_TOKEN: ${secrets.NUGET_API_KEY}
-          
-      - name: Display dotnet version
-        run: dotnet --version
         
       - name: Set VERSION_NUMBER variable from tag
         run: |
